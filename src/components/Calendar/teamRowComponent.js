@@ -16,27 +16,25 @@ export class TeamRowComponent extends Component {
   }
 
   generateTeamHeader() {
-    // insert TeamName
-    const teamName = new TeamName(this.depTeamInfo, this.date);
-    teamName.append(this.component);
+    const teamName = new TeamName(this.component, this.depTeamInfo, this.date);
+    this.component.append(teamName);
 
     for (let index = 0; index < this.monthLength; index++) {
-      // insert TeamCell
       const teamCell = new TeamCell(
+        this.component,
         this.depTeamInfo,
         this.monthLength,
         this.date,
       );
-      teamCell.append(this.component);
+      this.component.append(teamCell);
     }
-    // insert TeamSum
+
     const teamSum = new TeamSum();
-    teamSum.prepend(this.component);
+    this.component.append(teamSum);
   }
 
-  // rendering TeamRow
   render() {
-    this.createTeamRow();
+    this.generateTeamHeader();
     super.render();
   }
 }

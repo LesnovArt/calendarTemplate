@@ -7,16 +7,6 @@ export class TeamCell extends Component {
     this.monthLength = monthLength;
     this.depTeamInfo = depTeamInfo;
     this.component.className = "teamInfo";
-    this.component.textContent = `<div class="infoWrapper">
-      <p>${this.depTeamInfo.name}</p>
-      <div class="infoBlock"> 
-        <i class="fas fa-users"></i>
-          <span>${this.depTeamInfo.members.length}</span >
-          <div class="percent">
-          ${this.depTeamInfo.percentageOfAbsent[this.date.getMonth()]}%</div>
-        <i class="fas chevronBtn fa-chevron-up"></i>
-      </div >
-    </div >`;
   }
 
   updateTeamCells(newDate) {
@@ -44,6 +34,7 @@ export class TeamCell extends Component {
   }
 
   render() {
+    this.updateTeamCells(this.date);
     super.render();
   }
 }
