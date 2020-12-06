@@ -1,15 +1,15 @@
-import { renderCalendar } from "./renderCalendar";
+import { Calendar } from "./components/Calendar";
 
-let currentDate = new Date();
+const calendar = new Calendar("#app");
 
-renderCalendar(currentDate);
+calendar.render();
 
-/*
-const departmentTeams = [
-  {
-    name: "Frontend Team",
-    percentageOfAbsent: 0,
-    members: [{ name: "FE_Team_User1" }],
-  },
-];
-*/
+// fetch("https://jsonplaceholder.typicode.com/posts/1", {
+//   method: "PUT",
+//   body: JSON.stringify(departmentTeams),
+//   headers: {
+//     "Content-type": "application/json; charset=UTF-8",
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((json) => json);
