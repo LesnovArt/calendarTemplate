@@ -1,19 +1,9 @@
-import {
-  Component
-} from "..";
-import {
-  Navigation
-} from "./navigation";
-import {
-  Table
-} from "./table";
-import {
-  PopupWindow
-} from "../PopupWindow";
-import {
-  VacationForm
-} from "../VacationForm";
-
+import { Component } from "..";
+import { Navigation } from "./navigation";
+import { Table } from "./table";
+import { PopupWindow } from "../PopupWindow";
+import { VacationForm } from "../VacationForm";
+import "./EmployerRow/TeamItem.css";
 
 export class Calendar extends Component {
   constructor(parentSelector) {
@@ -24,9 +14,6 @@ export class Calendar extends Component {
     this.popupForm = new VacationForm(this.popup.component);
     this.table = new Table(this.component, this.currentDate, this.popupForm);
     this.nav = new Navigation(this.component, this.currentDate, this.table);
-
-
-
   }
   render() {
     super.render();
@@ -34,8 +21,7 @@ export class Calendar extends Component {
     this.table.render();
     this.popup.render();
     if (!this.popup.state.loading && !this.popup.state.error) {
-      this.popupForm.render()
+      this.popupForm.render();
     }
-
   }
 }
