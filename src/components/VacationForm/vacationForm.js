@@ -1,23 +1,24 @@
-import {
-    PopupWindow
-} from "../PopupWindow";
+import { PopupWindow } from "../PopupWindow";
 import "./vacationForm.css";
 
-
 export class VacationForm extends PopupWindow {
-    constructor(parentSelector) {
+    constructor(parentSelector, spinnerContext, popupContext, errorContext) {
         super(parentSelector);
+        this.spinnerContext = spinnerContext;
+        this.popupContext = popupContext;
+        this.errorContext = errorContext;
         this.component.classList.add("form__container");
+        this.component.classList.remove(`popup__substrate`);
+        // this.setTimeoutFunc = function(){
+        //     this.spinnerContext.hideSpinner.bind(this.spinnerContext)
+        // }.bind(this)
     }
-
-
     generateElement() {
         this.component.innerHTML = `
             <form class="form">
                 <div class="form__header">
                     <h3 class="form__title">Vacation Request</h3>
-                    <div class="form__days-counter">
-<!--                        <p class="form__days-amount">8</p>-->
+                    <div class="form__days-counter">    
                         <p class="form__days-text">days</p>
                     </div>
                 </div>
@@ -47,20 +48,39 @@ export class VacationForm extends PopupWindow {
                 </div>
                 <div class="form__footer">
                     <button class="form__cancel-btn form__btn" type="submit">Cancel</button>
-                    <button class="form__send-btn form__btn" type="submit">Send</button>
+                    
                 </div>
             </form>
         `;
+    this.daysAmount = document.createElement("p");
+    this.daysAmount.classList.add("form__days-amount");
+    this.daysCounter = this.component.querySelector(".form__days-counter");
+    this.daysAmount.textContent = "8";
+    this.daysCounter.prepend(this.daysAmount);
 
-        this.daysAmount = document.createElement('p');
-        this.daysAmount.classList.add("form__days-amount");
-        this.daysCounter = this.component.querySelector(".form__days-counter");
-        this.daysAmount.textContent = '8';
-        this.daysCounter.prepend(this.daysAmount);
+        this.sendBtn = document.createElement("button");
+        this.sendBtn.classList.add("form__send-btn");
+        this.sendBtn.classList.add("form__btn")
+        // this.sendBtn.createAttribute("type", "submit");
+        this.sendBtn.textContent = "Send";
+        this.formFooter = this.component.querySelector(".form__footer");
+        this.formFooter.appendChild(this.sendBtn);
+
+        const btn = this.component.querySelector(".form__send-btn");
+        // const setTimeoutFunc = this.popupContext.hide.bind(this.popupContext);
+        btn.addEventListener("click", function (event) {
+            event.preventDefault()
+            this.spinnerContext.showSpinner.call(this.spinnerContext);
+            this.component.style.display = "none";
+            // setTimeout(this.setTimeoutFunc, 3000);
+        }.bind(this));
     }
 
-    render() {
-        this.generateElement();
-        super.render();
-    }
+
+/*.addEventListener("click",this.spinnerContext.hideSpinner.call(this.spinnerContext))*/
+
+  render() {
+    this.generateElement();
+    super.render();
+  }
 }

@@ -1,6 +1,6 @@
 import { Component } from "../../component";
 import { TeamName } from "./teamNameComponent";
-import { TeamCell } from "./teamCellComponent";
+import { TeamCell } from "./teamCellComponent.ts";
 
 export class TeamRowComponent extends Component {
   constructor(parentSelector, depTeamInfo, monthLength, date, hideTable) {

@@ -1,104 +1,149 @@
 import { Component } from "../..";
-import { formatInputDate } from "../../../utils"
-import { DayCell } from "./dayCell";
+import { formatInputDate } from "../../../utils";
+import { DayCell } from "./DayCell";
+import { VacationSumCell } from "./VacationSumCell";
 
 export class TeamItem extends Component {
-    constructor(parentSelector, personData, teamName, daysInCurrentMonth, date) {
-        super(parentSelector, "tr");
-        this.date = date;
-        this.teamName = teamName;
-        this.daysInCurrentMonth = daysInCurrentMonth;
-        this.personData = personData;
-        this.dayCells = [];
-        this.vacationSum = 0;
-    }
-    generateVacationSets() {
-        this.vacationFiltered = [];
-        for(let vacationItem of this.personData.vacations) {
-            let startDate = formatInputDate(vacationItem.startDate);
-            let endDate = formatInputDate(vacationItem.endDate);
-            const firstDayOfMonth = new Date(this.date.getFullYear(), this.date.getMonth());
-            const lastDayOfMonth = new Date(this.date.getFullYear(), this.date.getMonth(), this.daysInCurrentMonth);
-            const availableDates = {
-                set: new Set(),
-                type: vacationItem.type
-            }
-            if(!(endDate < firstDayOfMonth) && !(startDate > lastDayOfMonth)) {
-                let currentVacationDate = new Date(startDate.getTime());
-                for(let i = currentVacationDate.getDate(); currentVacationDate <= lastDayOfMonth && currentVacationDate <= endDate; ++i) {
+  constructor(properties) {
+    super(properties.parentSelector, "tr");
+    ({
+      personData: this.personData,
+      teamName: this.teamName,
+      daysInCurrentMonth: this.daysInCurrentMonth,
+      date: this.date,
+      dayPersonStats: this.dayPersonStats,
+    } = properties);
+    this.dayCells = [];
+    this.vacationSum = 0;
+    this.vacationSumCell = new VacationSumCell({ parentComponent: this.component, vacationSum: this.vacationSum });
+  }
 
-                    if(firstDayOfMonth <= currentVacationDate && lastDayOfMonth >= currentVacationDate) {
-                        availableDates.set.add(currentVacationDate.toISOString());
-                    }
-
-                    currentVacationDate = new Date(startDate.getFullYear(), startDate.getMonth(), i);
-                }
-            }
-            this.vacationFiltered.push(availableDates);
+  generateVacationSets() {
+    this.vacationFiltered = [];
+    for (const vacationItem of this.personData.vacations) {
+      const startDate = formatInputDate(vacationItem.startDate);
+      const endDate = formatInputDate(vacationItem.endDate);
+      const firstDayOfMonth = new Date(this.date.getFullYear(), this.date.getMonth());
+      const lastDayOfMonth = new Date(this.date.getFullYear(), this.date.getMonth(), this.daysInCurrentMonth);
+      const availableDates = {
+        availableDatesList: new Set(),
+        type: vacationItem.type,
+      };
+      if (!(endDate < firstDayOfMonth) && !(startDate > lastDayOfMonth)) {
+        let currentVacationDate = new Date(startDate.getTime());
+        for (
+          let index = currentVacationDate.getDate();
+          currentVacationDate <= lastDayOfMonth && currentVacationDate <= endDate;
+          ++index
+        ) {
+          currentVacationDate = new Date(startDate.getFullYear(), startDate.getMonth(), index);
+          if (firstDayOfMonth <= currentVacationDate && lastDayOfMonth >= currentVacationDate) {
+            availableDates.availableDatesList.add(currentVacationDate.toISOString());
+          }
+          currentVacationDate = new Date(startDate.getFullYear(), startDate.getMonth(), index + 1);
         }
+      }
+      this.vacationFiltered.push(availableDates);
     }
-    generateTeamItem() {
-        //debugger
-        this.generateVacationSets();
-        this.component.className = `employeeКRow ${this.teamName}`;
-        let nameCell = document.createElement("td");
-        nameCell.className = "nameCell";
-        nameCell.textContent = this.personData.name;
-        this.component.appendChild(nameCell);
-        for (let j = 1; j <= this.daysInCurrentMonth; j++) {
-            const dayCell = new DayCell(this.component, this.vacationFiltered,
-              new Date(this.date.getFullYear(), this.date.getMonth(), j));
-            dayCell.render();
-            this.vacationSum += dayCell.vacationSum;
-            this.dayCells.push(dayCell);
-        }
-        let sumOfDaysOff = document.createElement("td");
-        sumOfDaysOff.className = "sumOfDaysOff"
-        sumOfDaysOff.textContent = `${this.vacationSum}`;
-        this.component.appendChild(sumOfDaysOff);
-    }
-    updateTeamItem(newDate) {
-        let daysInPrevMonth = this.daysInCurrentMonth;
+  }
 
-        //добавить функции для смены даты, дней
-        this.date = newDate;
-        this.vacationSum = 0;
-        this.daysInCurrentMonth = new Date(
-          this.date.getFullYear(),
-          this.date.getMonth() + 1,
-            0,
-        ).getDate();
-        this.generateVacationSets();
-
-        for(let i = 0; i < daysInPrevMonth && i < this.daysInCurrentMonth; i++) {
-            this.dayCells[i].updateDayCell(this.vacationFiltered,
-              new Date(this.date.getFullYear(), this.date.getMonth(), i+1));
-            this.vacationSum += this.dayCells[i].vacationSum;
+  showVacationInfoText() {
+    let startUiCellIndex;
+    let vacationUILength;
+    let shift;
+    for (let index = 0; index < this.dayCells.length; ++index) {
+      if (this.dayCells[index].component.className.includes("vacation-cell_ui-start")) {
+        startUiCellIndex = index;
+      }
+      if (this.dayCells[index].component.className.includes("vacation-cell_ui-end")) {
+        vacationUILength = index - startUiCellIndex;
+        if (vacationUILength % 2 === 0) {
+          shift = vacationUILength / 2;
+          this.dayCells[startUiCellIndex + shift].component.className +=
+            " vacation-cell_type-text vacation-cell_type-text_left_s";
+        } else {
+          shift = (vacationUILength - 1) / 2;
+          this.dayCells[startUiCellIndex + shift].component.className +=
+            " vacation-cell_type-text vacation-cell_type-text_left_l";
         }
-        if (this.daysInCurrentMonth < daysInPrevMonth) {
-            let cellsToRemove = this.dayCells.splice(this.daysInCurrentMonth, daysInPrevMonth - this.daysInCurrentMonth);
-            for(let cellToRemove of cellsToRemove) {
-                cellToRemove.parent.removeChild(cellToRemove.component);
-            }
-        }else if(this.daysInCurrentMonth > daysInPrevMonth) {
-            this.component.lastElementChild.remove();
-            for(let i = daysInPrevMonth + 1; i <= this.daysInCurrentMonth; ++i) {
+      }
+    }
+  }
 
-                const dayCell = new DayCell(this.component, this.vacationFiltered,
-                  new Date(this.date.getFullYear(), this.date.getMonth(), i));
-                this.vacationSum += dayCell.vacationSum;
-                dayCell.render();
-                this.dayCells.push(dayCell);
-            }
-            let sumOfDaysOff = document.createElement("td");
-            sumOfDaysOff.className = "sumOfDaysOff"
-            sumOfDaysOff.textContent = `${this.vacationSum}`;
-            this.component.appendChild(sumOfDaysOff);
-        }
-        this.component.lastElementChild.textContent = `${this.vacationSum}`;
+  updateDayPersonStats(dayCell, personStatsIndex) {
+    if (!dayCell.isWeekend) {
+      this.dayPersonStats[personStatsIndex] += dayCell.vacationSum;
+    } else {
+      this.dayPersonStats[personStatsIndex] = "weekend";
     }
-    render() {
-        this.generateTeamItem();
-        super.render();
+  }
+
+  generateTeamItem() {
+    this.generateVacationSets();
+    this.component.className = `employeeКRow`;
+    const nameCell = document.createElement("td");
+    nameCell.className = "nameCell";
+    nameCell.textContent = this.personData.name;
+    this.component.append(nameCell);
+    for (let index = 1; index <= this.daysInCurrentMonth; index++) {
+      const dayCell = new DayCell({
+        parentComponent: this.component,
+        vacationFiltered: this.vacationFiltered,
+        date: new Date(this.date.getFullYear(), this.date.getMonth(), index),
+      });
+      dayCell.render();
+
+      this.updateDayPersonStats(dayCell, index - 1);
+      this.vacationSum += dayCell.vacationSum;
+      this.dayCells.push(dayCell);
     }
+    this.vacationSumCell.updateVacationSumCell(this.vacationSum);
+    this.vacationSumCell.render();
+    this.showVacationInfoText();
+  }
+
+  updateTeamItem(newDate, dayPersonStats) {
+    const daysInPreviousMonth = this.daysInCurrentMonth;
+    this.date = newDate;
+    this.vacationSum = 0;
+    this.daysInCurrentMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
+    this.dayPersonStats = dayPersonStats;
+    this.generateVacationSets();
+
+    for (let index = 0; index < daysInPreviousMonth && index < this.daysInCurrentMonth; index++) {
+      this.dayCells[index].updateDayCell(
+        this.vacationFiltered,
+        new Date(this.date.getFullYear(), this.date.getMonth(), index + 1),
+      );
+      this.vacationSum += this.dayCells[index].vacationSum;
+      this.updateDayPersonStats(this.dayCells[index], index);
+    }
+    if (this.daysInCurrentMonth < daysInPreviousMonth) {
+      const cellsToRemove = this.dayCells.splice(this.daysInCurrentMonth, daysInPreviousMonth - this.daysInCurrentMonth);
+      for (const cellToRemove of cellsToRemove) {
+        cellToRemove.component.remove();
+      }
+    } else if (this.daysInCurrentMonth > daysInPreviousMonth) {
+      this.component.lastElementChild.remove();
+      for (let index = daysInPreviousMonth + 1; index <= this.daysInCurrentMonth; ++index) {
+        const dayCell = new DayCell({
+          parentComponent: this.component,
+          vacationFiltered: this.vacationFiltered,
+          date: new Date(this.date.getFullYear(), this.date.getMonth(), index),
+        });
+        dayCell.render();
+        this.dayCells.push(dayCell);
+        this.vacationSum += dayCell.vacationSum;
+        this.updateDayPersonStats(this.dayCells[index - 1], index - 1);
+      }
+      this.vacationSumCell.render();
+    }
+    this.vacationSumCell.updateVacationSumCell(this.vacationSum);
+    this.showVacationInfoText();
+  }
+
+  render() {
+    this.generateTeamItem();
+    super.render();
+  }
 }

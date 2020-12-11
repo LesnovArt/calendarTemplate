@@ -7,14 +7,6 @@ export class Component {
     }
     this.component = document.createElement(tagName);
   }
-<<<<<<< HEAD
-  hide() {
-    this.component.style.display = "none";
-  }
-  show() {
-    this.component.style.display = "";
-  }
-=======
 
   hide() {
     this.component.style.display = "none";
@@ -24,7 +16,6 @@ export class Component {
     this.component.style.display = "";
   }
 
->>>>>>> teams-component
   render() {
     this.parent.append(this.component);
     return this.component;

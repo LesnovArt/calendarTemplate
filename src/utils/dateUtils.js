@@ -3,9 +3,6 @@ export const dateFormatter = new Intl.DateTimeFormat("en", {
   weekday: "short",
   day: "numeric",
 });
-<<<<<<< HEAD
 export function formatInputDate(string) {
-  return new Date(`${string.slice(6, 10)}-${string.slice(3, 5)}-${string.slice(0, 2)}`);
+  return new Date(string.slice(6, 10), string.slice(3, 5) - 1, string.slice(0, 2));
 }
-=======
->>>>>>> teams-component
