@@ -28,7 +28,10 @@
         "case": "camelCase"
       }
     ],
+<<<<<<< HEAD
     "no-restricted-syntax": "off",
+=======
+>>>>>>> teams-component
     "import/prefer-default-export": "off",
     "prefer-destructuring": [
       "error",
