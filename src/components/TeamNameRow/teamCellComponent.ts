@@ -1,11 +1,11 @@
-import { Component } from "../../component";
+import { Component } from "../component";
 
 interface IMembers {
   name: string;
-  vocation: { [ key: string]: string};
+  vacation: { [ key: string]: string};
 }
 interface ITeams {
-  members: Array<IMembers>;
+  members: IMembers[];
   name: string;
   percentageOfAbsent: number[];
 }

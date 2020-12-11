@@ -3,12 +3,9 @@ import { Navigation } from "./navigation";
 import { Table } from "./table";
 import { PopupWindow } from "../PopupWindow";
 import { VacationForm } from "../VacationForm";
-import "./EmployeeRow/TeamItem.css";
 import { Spinner } from "../Spinner";
 // eslint-disable-next-line import/no-unresolved
 import { Error } from "../Error";
-import "./EmployeeRow/TeamItem.css";
-
 
 export class Calendar extends Component {
   constructor(parentSelector) {

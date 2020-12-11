@@ -1,4 +1,4 @@
-import { Component } from "../..";
+import { Component } from "../component";
 
 export class DayCell extends Component {
   constructor(properties) {

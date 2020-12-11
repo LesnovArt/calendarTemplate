@@ -1,4 +1,4 @@
-import { Component } from "../../component";
+import { Component } from "../component";
 
 export class TeamName extends Component {
   constructor(parentSelector, depTeamInfo, date, hideTable) {

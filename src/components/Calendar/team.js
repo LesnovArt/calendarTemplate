@@ -1,6 +1,6 @@
 import { Component } from "..";
-import { TeamRowComponent } from "./TeamNameRow/teamRowComponent";
-import { TeamItem } from "./EmployeeRow/TeamItem";
+import { TeamRowComponent } from "../TeamNameRow/teamRowComponent";
+import { TeamItem } from "../EmployerRow/TeamItem";
 
 export class Team extends Component {
   constructor(parentSelector, teamData, daysInCurrentMonth, date) {

@@ -142,7 +142,9 @@ button {
 
 /* team-name__block */
 
-@import url('./components/Calendar/TeamNameRow/teamNameRow.css');
+@import url('./components/TeamNameRow/teamNameRow');
+@import url('./components/EmployerRow/TeamItem.css');
+
 /* team-member__block */
 
 .nameCell {
