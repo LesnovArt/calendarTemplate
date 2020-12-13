@@ -1,4 +1,4 @@
-import { Component } from "..";
+import { Component } from "../component.ts";
 import { TeamRowComponent } from "../TeamNameRow/teamRowComponent.ts";
 import { TeamItem } from "../EmployerRow/TeamItem";
 

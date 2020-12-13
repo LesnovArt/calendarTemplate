@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.PopupWindow = void 0;
-var component_1 = require("../component");
+var component_1 = require("../component.ts");
 require("./popupWindow.css");
 var PopupWindow = /** @class */ (function (_super) {
     __extends(PopupWindow, _super);

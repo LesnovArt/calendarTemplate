@@ -1,2 +1,2 @@
-export { dateFormatter, formatInputDate } from "./dateUtils";
-export { departmentTeams } from "./departmentTeams";
+export { dateFormatter, formatInputDate } from "./dateUtils.ts";
+export { departmentTeams } from "./departmentTeams.ts";

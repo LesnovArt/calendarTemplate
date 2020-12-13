@@ -1,6 +1,6 @@
-import { Component } from "..";
-import { dateFormatter } from "../../utils";
-import { departmentTeams } from "../..";
+import { Component } from "../component.ts";
+import { dateFormatter } from "../../utils/dateUtils.ts";
+import { departmentTeams } from "../../utils/departmentTeams.ts";
 import { Team } from "./team";
 import { TeamsFooter } from "./teamsFooterComponent";
 

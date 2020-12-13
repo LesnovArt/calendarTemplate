@@ -1,7 +1,9 @@
 export class Component {
-  constructor(parentSelector, tagName = "div") {
+  parent: string | HTMLElement | Element;
+  component: HTMLElement;
+  constructor(parentSelector: string | HTMLElement | Element, tagName: string = "div") {
     if (typeof parentSelector === "string") {
-      this.parent = document.querySelector(parentSelector);
+      this.parent = document.querySelector(parentSelector)!;
     } else {
       this.parent = parentSelector;
     }
@@ -17,7 +19,7 @@ export class Component {
   }
 
   render() {
-    this.parent.append(this.component);
+    (this.parent as HTMLElement).append(this.component);
     return this.component;
   }
 }

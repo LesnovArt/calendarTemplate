@@ -1,4 +1,4 @@
-import { Component } from "../component";
+import { Component } from "../component.ts";
 import { FooterCell } from "./footerCell";
 
 export class TeamsFooter extends Component {

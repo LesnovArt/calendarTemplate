@@ -1,4 +1,4 @@
-import { Component } from "..";
+import { Component } from "../component.ts";
 import { Navigation } from "./navigation";
 import { Table } from "./table";
 import { PopupWindow } from "../PopupWindow";

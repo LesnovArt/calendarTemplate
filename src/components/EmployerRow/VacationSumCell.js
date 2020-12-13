@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/filename-case
-import { Component } from "../component";
+import { Component } from "../component.ts";
 
 export class VacationSumCell extends Component {
   constructor(properties) {

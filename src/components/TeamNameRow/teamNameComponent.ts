@@ -7,7 +7,7 @@ export class TeamName extends Component {
   hideTable: Function;
   chevronBtn: Element;
 
-  constructor(parentSelector: string | HTMLElement, depTeamInfo: ITeams, date: Date, hideTable: Function) {
+  constructor(parentSelector: string | HTMLElement | Element, depTeamInfo: ITeams, date: Date, hideTable: Function) {
     super(parentSelector, "td");
     this.hideTable = hideTable;
     this.date = date;

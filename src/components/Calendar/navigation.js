@@ -1,5 +1,5 @@
-import { Component } from "..";
-import { dateFormatter } from "../../utils";
+import { Component } from "../component.ts";
+import { dateFormatter } from "../../utils/dateUtils.ts";
 
 export class Navigation extends Component {
   constructor(parentSelector, date, tableComponent) {

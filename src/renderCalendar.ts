@@ -1,11 +1,11 @@
-import { dateFormatter } from "./utils";
+import { dateFormatter } from "./utils/dateUtils";
 
-export function renderCalendar(currentDate) {
-  const outputCalendar = document.querySelector(".outputCalendar");
+export function renderCalendar(currentDate: Date) {
+  const outputCalendar = document.querySelector(".outputCalendar")!;
   let outputCalendarHTML = "";
   const daysInCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 
-  const chosenMonth = document.querySelector(".chosenMonth");
+  const chosenMonth = document.querySelector(".chosenMonth")!;
   chosenMonth.innerHTML = dateFormatter.format(new Date(currentDate)).replace(",", "").split(" ")[1];
 
   for (let index = 1; index <= daysInCurrentMonth; index++) {

@@ -6,5 +6,9 @@ export interface ITeams {
 
 interface IMembers {
   name: string;
-  vacation: { [ key: string]: string};
+  vacations: IVacations[]
+}
+
+interface IVacations {
+  [ key: string]: string;
 }

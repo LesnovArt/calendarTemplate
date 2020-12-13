@@ -6,7 +6,7 @@ export class TeamCell extends Component {
   monthLength: number;
   date: Date;
 
-  constructor(parentSelector: string | HTMLElement, depTeamInfo: ITeams, monthLength: number, date: Date) {
+  constructor(parentSelector: string | HTMLElement | Element, depTeamInfo: ITeams, monthLength: number, date: Date) {
     super(parentSelector, "td");
     this.depTeamInfo = depTeamInfo;
     this.monthLength = monthLength;

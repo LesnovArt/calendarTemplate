@@ -1,5 +1,5 @@
-import { Component } from "../component";
-import { formatInputDate } from "../../utils";
+import { Component } from "../component.ts";
+import { formatInputDate } from "../../utils/dateUtils";
 import { DayCell } from "./DayCell";
 import { VacationSumCell } from "./VacationSumCell";
 
