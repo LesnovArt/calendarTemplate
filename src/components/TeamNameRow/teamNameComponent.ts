@@ -1,7 +1,13 @@
 import { Component } from "../component";
+import { ITeams } from "../../utils/IDepartment-teams";
 
 export class TeamName extends Component {
-  constructor(parentSelector, depTeamInfo, date, hideTable) {
+  depTeamInfo: ITeams;
+  date: Date;
+  hideTable: Function;
+  chevronBtn: Element;
+
+  constructor(parentSelector: string | HTMLElement, depTeamInfo: ITeams, date: Date, hideTable: Function) {
     super(parentSelector, "td");
     this.hideTable = hideTable;
     this.date = date;
@@ -19,7 +25,8 @@ export class TeamName extends Component {
         </button>
       </div >
     </div >`;
-    this.chevronBtn = this.component.querySelector(".chevronBtn");
+    this.chevronBtn = <Element>this.component.querySelector(".chevronBtn");
     this.chevronBtn.addEventListener("click", this.hideTable);
   }
 }
+

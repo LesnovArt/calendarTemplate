@@ -1,9 +1,17 @@
 import { Component } from "../component";
 import { TeamName } from "./teamNameComponent";
-import { TeamCell } from "./teamCellComponent.ts";
+import { TeamCell } from "./teamCellComponent";
+import { ITeams } from "../../utils/IDepartment-teams";
+import { ICell } from "./cellContext";
 
 export class TeamRowComponent extends Component {
-  constructor(parentSelector, depTeamInfo, monthLength, date, hideTable) {
+  depTeamInfo: ITeams;
+  monthLength: number;
+  date: Date;
+  hideTable: Function;
+  daysContext: ICell[];
+
+  constructor(parentSelector: string | HTMLElement, depTeamInfo: ITeams, monthLength: number, date: Date, hideTable: Function) {
     super(parentSelector, "tr");
     this.hideTable = hideTable;
     this.date = date;
@@ -13,7 +21,7 @@ export class TeamRowComponent extends Component {
     this.daysContext = [];
   }
 
-  generateTeamHeader() {
+  generateTeamHeader(): void {
     const teamName = new TeamName(this.component, this.depTeamInfo, this.date, this.hideTable);
     this.component.append(teamName.component);
     for (let index = 0; index <= 31; index++) {
@@ -26,12 +34,11 @@ export class TeamRowComponent extends Component {
     }
   }
 
-  updateTeamHeader(newDate) {
+  updateTeamHeader(newDate: Date) {
     const daysInPreviousMonth = this.monthLength;
     this.monthLength = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
-
     const percentageOfAbsentData = this.daysContext[0].depTeamInfo.percentageOfAbsent;
-    const percent = this.component.querySelector(".percent");
+    const percent = this.component.querySelector(".percent")!;
     const currentMonth = newDate.getMonth();
     percent.textContent = `${percentageOfAbsentData[currentMonth]} %`;
 
@@ -46,7 +53,7 @@ export class TeamRowComponent extends Component {
     }
   }
 
-  render() {
+  renderNameRow() {
     this.generateTeamHeader();
     super.render();
   }

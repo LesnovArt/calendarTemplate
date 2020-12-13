@@ -1,5 +1,5 @@
 import { Component } from "..";
-import { TeamRowComponent } from "../TeamNameRow/teamRowComponent";
+import { TeamRowComponent } from "../TeamNameRow/teamRowComponent.ts";
 import { TeamItem } from "../EmployerRow/TeamItem";
 
 export class Team extends Component {
@@ -21,8 +21,7 @@ export class Team extends Component {
       this.date,
       this.hideTable.bind(this),
     );
-
-    this.teamHeaderContext.render();
+    this.teamHeaderContext.renderNameRow();
 
     const { members } = this.teamData;
     const teamName = this.teamData.name.split(" ")[0].toLowerCase();

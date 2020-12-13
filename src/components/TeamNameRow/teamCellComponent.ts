@@ -1,14 +1,5 @@
 import { Component } from "../component";
-
-interface IMembers {
-  name: string;
-  vacation: { [ key: string]: string};
-}
-interface ITeams {
-  members: IMembers[];
-  name: string;
-  percentageOfAbsent: number[];
-}
+import { ITeams } from "../../utils/IDepartment-teams";
 
 export class TeamCell extends Component {
   depTeamInfo: ITeams;
@@ -23,3 +14,5 @@ export class TeamCell extends Component {
     this.date = date;
   }
 }
+
+
